@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	v "github.com/RussellLuo/validating"
+	v "github.com/webdeveloppro/validating"
 )
 
 type Author struct {
@@ -103,6 +103,33 @@ func TestAll(t *testing.T) {
 				}
 			},
 			nil,
+		},
+		{
+			func() v.Schema {
+				value := "email@mail.ru"
+				return v.Schema{
+					v.F("value", &value): v.Email(),
+				}
+			},
+			nil,
+		},
+		{
+			func() v.Schema {
+				value := "email"
+				return v.Schema{
+					v.F("value", &value): v.Email(),
+				}
+			},
+			v.NewErrors("email", v.ErrInvalid, "mail: no angle-addr"),
+		},
+		{
+			func() v.Schema {
+				value := "email@.ru"
+				return v.Schema{
+					v.F("value", &value): v.Email(),
+				}
+			},
+			v.NewErrors("email", v.ErrInvalid, "mail: no angle-addr"),
 		},
 	}
 	for _, c := range cases {

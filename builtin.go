@@ -1,6 +1,7 @@
 package validating
 
 import (
+	"net/mail"
 	"time"
 )
 
@@ -615,6 +616,22 @@ func In(values ...interface{}) Validator {
 		if !valid {
 			return NewErrors(field.Name, ErrInvalid, msg)
 		}
+		return nil
+	})
+}
+
+// Validate email
+func Email() Validator {
+	return FromFunc(func(field Field) Errors {
+		val, ok := field.ValuePtr.(*string)
+		if !ok {
+			return NewErrors("email", ErrInvalid, "invalid type")
+		}
+		_, err := mail.ParseAddress(*val)
+		if err != nil {
+			return NewErrors("email", ErrInvalid, err.Error())
+		}
+
 		return nil
 	})
 }

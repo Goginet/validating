@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	v "github.com/RussellLuo/validating"
+	v "github.com/webdeveloppro/validating"
 )
 
 func validate(field v.Field) v.Errors {

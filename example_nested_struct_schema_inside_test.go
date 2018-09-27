@@ -3,7 +3,7 @@ package validating_test
 import (
 	"fmt"
 
-	v "github.com/RussellLuo/validating"
+	v "github.com/webdeveloppro/validating"
 )
 
 type Address3 struct {

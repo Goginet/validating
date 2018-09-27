@@ -4,7 +4,7 @@ import (
 	"flag"
 	"fmt"
 
-	v "github.com/RussellLuo/validating"
+	v "github.com/webdeveloppro/validating"
 )
 
 func Example_flagField() {
