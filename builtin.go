@@ -1,6 +1,7 @@
 package validating
 
 import (
+	"encoding/json"
 	"net/mail"
 	"time"
 )
@@ -630,6 +631,24 @@ func Email() Validator {
 		_, err := mail.ParseAddress(*val)
 		if err != nil {
 			return NewErrors("email", ErrInvalid, err.Error())
+		}
+
+		return nil
+	})
+}
+
+// Validate json
+func Json() Validator {
+	return FromFunc(func(field Field) Errors {
+		val, ok := field.ValuePtr.(*string)
+		if !ok {
+			return NewErrors("json", ErrInvalid, "invalid type")
+		}
+
+		data := make(map[string]interface{})
+
+		if err := json.Unmarshal([]byte(*val), &data); err != nil {
+			return NewErrors("json", ErrInvalid, err.Error())
 		}
 
 		return nil
